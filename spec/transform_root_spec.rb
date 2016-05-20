@@ -1,27 +1,27 @@
 require 'spec_helper'
 
-RSpec.describe TransformTree::TransformNode do
+RSpec.describe TransformTree::TransformRoot do
   let(:closure) { ->(o){o}  }
   let(:twice) { ->(n){n = n * 2}  }
   let(:append) { ->(s) {s = "#{s}A"} }
   let(:prepend) { ->(s) {s = "P#{s}"} }
 
-  let(:root) { TransformTree::TransformNode.new(closure) }
-  let(:two) { TransformTree::TransformNode.new(closure).add_transform(twice) }
-  let(:binary) { TransformTree::TransformNode.new(twice).add_transform(append, prepend) }
+  let(:root) { TransformTree::TransformRoot.new }
+  let(:two) { TransformTree::TransformRoot.new.add_transform(twice) }
+  let(:binary) { TransformTree::TransformRoot.new.add_transform(append, prepend) }
   let(:large) do
-    r = TransformTree::TransformNode.new(closure)
+    r = TransformTree::TransformRoot.new(closure)
     2.times { r.add_transform(append, prepend) }
     r
   end
   let :huge do
-    r = TransformTree::TransformNode.new(twice)
+    r = TransformTree::TransformRoot.new(twice)
     5.times { r.add_transform(twice, append) }
     r
   end
 
   it 'should not raise an error' do
-    expect{TransformTree::TransformNode.new(->{})}.to_not raise_error
+    expect{TransformTree::TransformRoot.new}.to_not raise_error
   end
 
   describe '#execute' do
@@ -51,6 +51,18 @@ RSpec.describe TransformTree::TransformNode do
     end
   end
 
+  describe '#levels' do
+    it 'should return the number of levels (1-indexed)' do
+      aggregate_failures do
+        expect(root.levels).to eq 1
+        expect(two.levels).to eq 2
+        expect(binary.levels).to eq 2
+        expect(large.levels).to eq 3
+        expect(huge.levels).to eq 6
+      end
+    end
+  end
+
   describe '#to_a' do
     it 'should have the correct number of elements' do
       aggregate_failures do
@@ -74,7 +86,7 @@ RSpec.describe TransformTree::TransformNode do
       end
     end
   end
-=begin
+
   describe '#leaves' do
     it 'should return the leaves' do
       aggregate_failures do
@@ -86,7 +98,7 @@ RSpec.describe TransformTree::TransformNode do
       end
     end
   end
-=end
+
   describe '#add_transform'
 
 end
