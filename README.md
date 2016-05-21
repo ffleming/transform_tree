@@ -29,13 +29,24 @@ downcase = ->(o) { o.downcase }
 append_s = ->(o) { "#{o}s" }
 append_exc = ->(o) { "#{o}!" }
 
-tree.add_transform(upcase, downcase, TransformTree::Transforms.null)
-tree.add_transform(append_s, append_exc, TransformTree::Transforms.null)
+tree.add_transform(upcase, downcase, TransformTree::Transforms::null)
+tree.add_transform(append_s, append_exc, TransformTree::Transforms::null)
 tree.execute('Woof')
 ```
 ```ruby
  => ["WOOFs", "WOOF!", "WOOF", "woofs", "woof!", "woof", "Woofs", "Woof!", "Woof"]
 ```
+
+For full code examples, see integration specs in `/spec/integrations`.
+
+### Provided transforms
+The `TransformTree::Transforms` module provides some useful transformations.  `ret` can be used to initially split your tree into distinct values, which are to be operated on later, e.g.
+```ruby
+closures = superlatives.map {|w| TransformTree::Transforms::ret(w)}
+tree.add_transforms(*closures)
+```
+
+If you prefer, you can build the tree without using `Transforms::ret` and instead simply make multiple calls to `#execute`, passing an object to process each time.
 
 ## Development
 
