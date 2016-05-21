@@ -32,11 +32,6 @@ RSpec.describe TransformTree::TransformRoot do
       expect(split_tree.execute 'test').to include "testtestA", "Ptesttest"
       expect(large.execute '_').to include "_AA", "P_A", "P_A", "PP_"
     end
-
-    it 'should function with multiple input/outputs' do
-      tree = TransformTree::TransformRoot.new.add_transform sum_and_product
-      expect(tree.execute(2,5)). to eq [7, 10]
-    end
   end
 
   describe '#report' do
