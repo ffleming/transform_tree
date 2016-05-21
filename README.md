@@ -2,7 +2,6 @@ TransformTree
 ---
 [![Build Status](https://travis-ci.org/ffleming/transform_tree.svg?branch=master)](https://travis-ci.org/ffleming/transform_tree)
 [![Code Climate](https://codeclimate.com/github/ffleming/transform_tree/badges/gpa.svg)](https://codeclimate.com/github/ffleming/transform_tree)
-[![Test Coverage](https://codeclimate.com/github/ffleming/transform_tree/badges/coverage.svg)](https://codeclimate.com/github/ffleming/transform_tree/coverage)
 
 TransformTree provides an API for buildng trees of closures and executing those closures on provided input.  This allows users to output all possible combinations of their desired transformations.  A small library of useful transformations is included.
 
