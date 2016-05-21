@@ -78,4 +78,10 @@ RSpec.describe TransformTree::TransformRoot do
       expect{ tree.add_transform(:closure) }.to change { tree.height }.by 1
     end
   end
+
+  describe '#add_transforms' do
+    it 'should respond' do
+      expect(single).to respond_to :add_transforms
+    end
+  end
 end
