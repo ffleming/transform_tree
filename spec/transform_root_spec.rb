@@ -20,8 +20,10 @@ RSpec.describe TransformTree::TransformRoot do
     r
   end
 
-  it 'should not raise an error' do
-    expect{TransformTree::TransformRoot.new}.to_not raise_error
+  describe '#initialize' do
+    it 'should not raise an error' do
+      expect{TransformTree::TransformRoot.new}.to_not raise_error
+    end
   end
 
   describe '#execute' do
@@ -50,7 +52,7 @@ RSpec.describe TransformTree::TransformRoot do
   end
 
   describe '#height' do
-    it 'should return the number of levels/height (1-indexed)' do
+    it 'should return the tree\'s height' do
       aggregate_failures do
         expect(single.height).to eq 0
         expect(two.height).to eq 1
@@ -61,18 +63,19 @@ RSpec.describe TransformTree::TransformRoot do
     end
   end
 
-  describe '#leaves' do
-    it 'should return the leaves' do
-      aggregate_failures do
-        expect(single.leaves.count).to eq 1
-        expect(two.leaves.count).to eq 1
-        expect(split_tree.leaves.count).to eq 2
-        expect(large.leaves.count).to eq 4
-        expect(huge.leaves.count).to eq 32
-      end
+  describe '#add_transform' do
+    let(:tree) { TransformTree::TransformRoot.new }
+
+    it 'should be chainable' do
+      expect{ tree.add_transform(:closure).add_transform(:close) }.to_not raise_error
+    end
+
+    it "should alter the object's state" do
+      expect(tree.add_transform(:closure)).to be tree
+    end
+
+    it 'should increase the height' do
+      expect{ tree.add_transform(:closure) }.to change { tree.height }.by 1
     end
   end
-
-  describe '#add_transform'
-
 end
