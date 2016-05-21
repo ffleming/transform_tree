@@ -2,7 +2,7 @@ module TransformTree
   class TransformRoot < TransformNode
     attr_reader :height
     def initialize
-      super(TransformTree::NULL, 0)
+      super(TransformTree::Transforms.null, 0)
       @height = 0
     end
 

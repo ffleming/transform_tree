@@ -3,5 +3,11 @@ require "transform_tree/transform_node"
 require "transform_tree/transform_root"
 
 module TransformTree
-  NULL = ->(o){o}
+  module Transforms
+    class << self
+      def null
+        ->(o){ o }
+      end
+    end
+  end
 end
