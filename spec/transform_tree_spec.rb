@@ -21,7 +21,6 @@ describe TransformTree do
           lam = TransformTree::Transforms.ret(arg)
           expect(lam.call).to be arg
         end
-
       end
     end
   end
