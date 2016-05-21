@@ -9,15 +9,13 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Forrest Fleming"]
   spec.email         = ["ffleming@gmail.com"]
 
-  spec.summary       = %q{summary}
-  spec.description   = %q{todo}
-  spec.homepage      = "http://fsf.io"
+  spec.summary       = "TransformTree is a library for combining arbitrary transformations on objects."
+  spec.description   = "TransformTree provides an API for buildng trees of closures and executing those closures on provided input.  This allows users to output all possible combinations of their desired transformations.  A small library of useful transformations is included."
+  spec.homepage      = "https://github.com/ffleming/transform_tree"
   spec.license       = "MIT"
 
-  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
-  # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
+    spec.metadata['allowed_push_host'] = 'http://mygemserver.com'
   else
     raise "RubyGems 2.0 or newer is required to protect against public gem pushes."
   end
