@@ -1,5 +1,7 @@
 TransformTree
 ---
+[![Build Status](https://travis-ci.org/ffleming/transform_tree.svg?branch=master)](https://travis-ci.org/ffleming/transform_tree)
+
 TransformTree provides an API for buildng trees of closures and executing those closures on provided input.  This allows users to output all possible combinations of their desired transformations.  A small library of useful transformations is included.
 
 ## Installation
