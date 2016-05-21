@@ -19,10 +19,10 @@ class TransformTree::TransformNode
     self
   end
 
-  def execute(obj, memo = [])
-    children.each { |child| child.execute(closure.call(obj), memo) }
-    memo << closure.call(obj) if children.empty?
-    memo
+  def execute(obj, ret = [])
+    children.each { |child| child.execute(closure.call(obj), ret) }
+    ret << closure.call(obj) if children.empty?
+    ret
   end
 
   def report(built='')
@@ -31,9 +31,9 @@ class TransformTree::TransformNode
     built
   end
 
-  def leaves(memo=[])
-    (memo << self) if children.empty?
-    children.each {|child| child.leaves(memo) }
-    memo
+  def leaves(ret=[])
+    (ret << self) if children.empty?
+    children.each {|child| child.leaves(ret) }
+    ret
   end
 end
