@@ -2,27 +2,30 @@ require "transform_tree/version"
 require "transform_tree/transform_node"
 
 module TransformTree
-  class TransformRoot
+  NULL = ->(o){o}
+  class TransformRoot < TransformNode
     def initialize
-      @root = TransformNode.new ->(o){o}
-    end
-
-    def levels
-      node = root
-      while !node.children.empty?
-        node = node.children.first
-      end
-      node.level + 1
+      super(TransformTree::NULL, 0)
     end
 
     def add_transform(*closures)
-      root.add_transform(*closures)
-      self
+      super(*closures)
     end
 
-    def execute(obj)
-      root.execute(obj)
+    def report
+      super
     end
-    attr_reader :root
+
+    def height
+      leaves.first.level + 1
+    end
+
+    def execute(*args)
+      super(*args)
+    end
+
+    alias_method :add_transforms, :add_transform
+
   end
+
 end

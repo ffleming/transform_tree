@@ -1,7 +1,8 @@
 require 'byebug'
 require 'pry-byebug'
 class TransformTree::TransformNode
-  attr_reader :closure, :children, :level
+  protected
+  attr_reader :children, :closure, :level
 
   def initialize(closure, level = 0)
     @closure = closure
@@ -12,7 +13,7 @@ class TransformTree::TransformNode
   def add_transform(*closures)
     leaves.each do |leaf|
       closures.each do |closure|
-        leaf.children << self.class.new(closure, leaf.level + 1)
+        leaf.children << ::TransformTree::TransformNode.new(closure, leaf.level + 1)
       end
     end
     self
@@ -30,27 +31,9 @@ class TransformTree::TransformNode
     built
   end
 
-  def to_a(built=[])
-    built << self
-    children.each {|child| child.to_a(built) }
-    built
-  end
-
-  def count
-    to_a.count
-  end
-
-  def outputs
-    leaves.count
-  end
-
-  alias_method :add_transforms, :add_transform
-  private
-
   def leaves(memo=[])
     (memo << self) if children.empty?
     children.each {|child| child.leaves(memo) }
     memo
   end
-
 end
