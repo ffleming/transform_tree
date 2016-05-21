@@ -22,6 +22,12 @@ RSpec.describe TransformTree::TransformRoot do
       closures = superlatives.map {|w| TransformTree::Transforms::ret(w)}
       tree.add_transforms(*closures)
 
+      # split on whitespace removal
+      tree.add_transforms(
+        TransformTree::Transforms::null,
+        ->(s) { s.delete(' ') }
+      )
+
       # Split each input into 4: titleized, semi-titleized, upcased, and downcased
       # Note that you can use #add_transform or #add_transforms
       tree.add_transform(
@@ -41,7 +47,7 @@ RSpec.describe TransformTree::TransformRoot do
       tree.add_transform(hc_mask)
       processed = tree.execute('')
 
-      expect(processed).to include '$I$s$N$u$m$b$e$r$O$n$e$!', '$R$u$l$e$s', '$f$o$r$e$v$e$r$!'
+      expect(processed).to include '$I$s$N$u$m$b$e$r$O$n$e$!', '$R$u$l$e$s', '$f$o$r$e$v$e$r$!', '$i$s$a$w$e$s$o$m$e'
     end
   end
 end
