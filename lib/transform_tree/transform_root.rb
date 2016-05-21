@@ -16,6 +16,7 @@ module TransformTree
     end
 
     def execute(*args)
+      args = [nil] if args.empty?
       super(*args)
     end
 

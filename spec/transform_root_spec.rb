@@ -30,7 +30,11 @@ RSpec.describe TransformTree::TransformRoot do
   describe '#execute' do
     it 'should DFS through each transformation path, yielding the correct result' do
       expect(split_tree.execute 'test').to include "testtestA", "Ptesttest"
-      expect(large.execute '_').to include "_AA", "P_A", "P_A", "PP_"
+      expect(large.execute '_').to include "_AA", "P_A", "PP_"
+    end
+
+    it 'should be able to take no argument (as when used with `ret` transform)' do
+      expect(large.execute).to include "AA", "PA", "PP"
     end
   end
 
