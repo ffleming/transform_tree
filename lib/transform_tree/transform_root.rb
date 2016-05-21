@@ -1,19 +1,18 @@
 module TransformTree
   class TransformRoot < TransformNode
+    attr_reader :height
     def initialize
       super(TransformTree::NULL, 0)
+      @height = 0
     end
 
     def add_transform(*closures)
+      @height += 1
       super(*closures)
     end
 
     def report
       super
-    end
-
-    def height
-      leaves.first.level + 1
     end
 
     def execute(*args)

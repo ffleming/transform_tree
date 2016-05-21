@@ -47,11 +47,11 @@ RSpec.describe TransformTree::TransformRoot do
   describe '#height' do
     it 'should return the number of levels/height (1-indexed)' do
       aggregate_failures do
-        expect(single.height).to eq 1
-        expect(two.height).to eq 2
-        expect(split_tree.height).to eq 3
-        expect(large.height).to eq 3
-        expect(huge.height).to eq 7
+        expect(single.height).to eq 0
+        expect(two.height).to eq 1
+        expect(split_tree.height).to eq 2
+        expect(large.height).to eq 2
+        expect(huge.height).to eq 6
       end
     end
   end
