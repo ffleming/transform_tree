@@ -1,5 +1,3 @@
-require 'byebug'
-require 'pry-byebug'
 class TransformTree::TransformNode
   protected
   attr_reader :children, :closure, :level
