@@ -25,7 +25,7 @@ RSpec.describe TransformTree::TransformRoot do
   end
 
   describe '#execute' do
-    it 'should execute each node in to obtain an output' do
+    it 'should DFS through each transformation path, yielding the correct result' do
       expect(split_tree.execute('test').sort).to eq ["testtestA", "Ptesttest"].sort
       expect(large.execute('_').sort).to eq ["_AA", "P_A", "P_A", "PP_"].sort
     end
