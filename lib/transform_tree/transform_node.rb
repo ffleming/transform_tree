@@ -13,7 +13,7 @@ class TransformTree::TransformNode
   def add_transform(*closures)
     leaves.each do |leaf|
       closures.each do |closure|
-        leaf.children << ::TransformTree::TransformNode.new(closure, leaf.level + 1)
+        leaf.children << TransformTree::TransformNode.new(closure, leaf.level + 1)
       end
     end
     self
