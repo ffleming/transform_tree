@@ -6,16 +6,16 @@ RSpec.describe TransformTree::TransformRoot do
   let(:append) { ->(s) {s = "#{s}A"} }
   let(:prepend) { ->(s) {s = "P#{s}"} }
 
-  let(:root) { TransformTree::TransformRoot.new }
+  let(:single) { TransformTree::TransformRoot.new }
   let(:two) { TransformTree::TransformRoot.new.add_transform(twice) }
-  let(:binary) { TransformTree::TransformRoot.new.add_transform(append, prepend) }
+  let(:split_tree) { TransformTree::TransformRoot.new.add_transform(twice).add_transform(append, prepend) }
   let(:large) do
-    r = TransformTree::TransformRoot.new(closure)
+    r = TransformTree::TransformRoot.new
     2.times { r.add_transform(append, prepend) }
     r
   end
   let :huge do
-    r = TransformTree::TransformRoot.new(twice)
+    r = TransformTree::TransformRoot.new.add_transform(twice)
     5.times { r.add_transform(twice, append) }
     r
   end
@@ -26,63 +26,32 @@ RSpec.describe TransformTree::TransformRoot do
 
   describe '#execute' do
     it 'should execute each node in to obtain an output' do
-      expect(binary.execute('test').sort).to eq ["testtestA", "Ptesttest"].sort
+      expect(split_tree.execute('test').sort).to eq ["testtestA", "Ptesttest"].sort
       expect(large.execute('_').sort).to eq ["_AA", "P_A", "P_A", "PP_"].sort
     end
   end
 
   describe '#report' do
     it 'should ouput correctly' do
-      huge_expected = "0\n 1\n  2\n   3\n    4\n     5\n     5\n" <<
-      "    4\n     5\n     5\n   3\n    4\n     5\n     5\n    4\n" <<
-      "     5\n     5\n  2\n   3\n    4\n     5\n     5\n    4\n" <<
-      "     5\n     5\n   3\n    4\n     5\n     5\n    4\n     5\n" <<
-      "     5\n 1\n  2\n   3\n    4\n     5\n     5\n    4\n     5\n" <<
-      "     5\n   3\n    4\n     5\n     5\n    4\n     5\n     5\n" <<
-      "  2\n   3\n    4\n     5\n     5\n    4\n     5\n     5\n " <<
-      "  3\n    4\n     5\n     5\n    4\n     5\n     5\n"
+      huge_expected = "0\n 1\n  2\n   3\n    4\n     5\n      6\n      6\n     5\n      6\n      6\n    4\n     5\n      6\n      6\n     5\n      6\n      6\n   3\n    4\n     5\n      6\n      6\n     5\n      6\n      6\n    4\n     5\n      6\n      6\n     5\n      6\n      6\n  2\n   3\n    4\n     5\n      6\n      6\n     5\n      6\n      6\n    4\n     5\n      6\n      6\n     5\n      6\n      6\n   3\n    4\n     5\n      6\n      6\n     5\n      6\n      6\n    4\n     5\n      6\n      6\n     5\n      6\n      6\n"
       aggregate_failures do
-        expect(root.report).to eq "0\n"
+        expect(single.report).to eq "0\n"
         expect(two.report).to eq "0\n 1\n"
-        expect(binary.report).to eq "0\n 1\n 1\n"
+        expect(split_tree.report).to eq "0\n 1\n  2\n  2\n"
         expect(large.report).to eq "0\n 1\n  2\n  2\n 1\n  2\n  2\n"
         expect(huge.report).to eq huge_expected
       end
     end
   end
 
-  describe '#levels' do
-    it 'should return the number of levels (1-indexed)' do
+  describe '#height' do
+    it 'should return the number of levels/height (1-indexed)' do
       aggregate_failures do
-        expect(root.levels).to eq 1
-        expect(two.levels).to eq 2
-        expect(binary.levels).to eq 2
-        expect(large.levels).to eq 3
-        expect(huge.levels).to eq 6
-      end
-    end
-  end
-
-  describe '#to_a' do
-    it 'should have the correct number of elements' do
-      aggregate_failures do
-        expect(root.to_a.count).to eq 1
-        expect(two.to_a.count).to eq 2
-        expect(binary.to_a.count).to eq 3
-        expect(large.to_a.count).to eq 7
-        expect(huge.to_a.count).to eq 63
-      end
-    end
-  end
-
-  describe '#to_a' do
-    it 'should put the elements in an array' do
-      aggregate_failures do
-        expect(root.count).to eq 1
-        expect(two.count).to eq 2
-        expect(binary.count).to eq 3
-        expect(large.count).to eq 7
-        expect(huge.count).to eq 63
+        expect(single.height).to eq 1
+        expect(two.height).to eq 2
+        expect(split_tree.height).to eq 3
+        expect(large.height).to eq 3
+        expect(huge.height).to eq 7
       end
     end
   end
@@ -90,9 +59,9 @@ RSpec.describe TransformTree::TransformRoot do
   describe '#leaves' do
     it 'should return the leaves' do
       aggregate_failures do
-        expect(root.leaves.count).to eq 1
+        expect(single.leaves.count).to eq 1
         expect(two.leaves.count).to eq 1
-        expect(binary.leaves.count).to eq 2
+        expect(split_tree.leaves.count).to eq 2
         expect(large.leaves.count).to eq 4
         expect(huge.leaves.count).to eq 32
       end
@@ -102,4 +71,3 @@ RSpec.describe TransformTree::TransformRoot do
   describe '#add_transform'
 
 end
-
