@@ -7,6 +7,8 @@ TransformTree
 
 TransformTree provides an API for buildng trees of closures and executing those closures on provided input.  This allows users to output all possible combinations of their desired transformations.  A small library of useful transformations is included.
 
+Until 1.0, minor versions contain breaking changes while patch versions are
+backwards compatible.
 ## Installation
 
 Add this line to your application's Gemfile:

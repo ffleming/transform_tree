@@ -17,7 +17,7 @@ RSpec.describe 'Integrations' do
         "#{ret[0].downcase}#{ret[1..-1]}"
       end
 
-      tree = TransformTree::TransformRoot.new
+      tree = TransformTree::Root.new
 
       # Rather than executing the tree several times with each input, we can use the provide #ret transform
       # to split the root into input to be processed

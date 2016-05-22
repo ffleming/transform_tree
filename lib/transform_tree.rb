@@ -1,6 +1,6 @@
 require "transform_tree/version"
-require "transform_tree/transform_node"
-require "transform_tree/transform_root"
+require "transform_tree/node"
+require "transform_tree/root"
 
 module TransformTree
   module Transforms

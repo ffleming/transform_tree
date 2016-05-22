@@ -1,5 +1,5 @@
 module TransformTree
-  class TransformRoot < TransformNode
+  class Root < Node
     attr_reader :height
     def initialize
       super(TransformTree::Transforms.null, 0)

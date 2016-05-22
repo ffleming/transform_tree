@@ -1,29 +1,29 @@
 require 'spec_helper'
 
-RSpec.describe TransformTree::TransformRoot do
+RSpec.describe TransformTree::Root do
   let(:closure) { ->(o) { o } }
   let(:twice) { ->(n) { n * 2 }  }
   let(:append) { ->(s) { "#{s}A" } }
   let(:prepend) { ->(s) { "P#{s}" } }
   let(:sum_and_product) { ->(a, b) { [a + b, a * b] } }
 
-  let(:single) { TransformTree::TransformRoot.new }
-  let(:two) { TransformTree::TransformRoot.new.add_transform(twice) }
-  let(:split_tree) { TransformTree::TransformRoot.new.add_transform(twice).add_transform(append, prepend) }
+  let(:single) { TransformTree::Root.new }
+  let(:two) { TransformTree::Root.new.add_transform(twice) }
+  let(:split_tree) { TransformTree::Root.new.add_transform(twice).add_transform(append, prepend) }
   let(:large) do
-    r = TransformTree::TransformRoot.new
+    r = TransformTree::Root.new
     2.times { r.add_transform(append, prepend) }
     r
   end
   let :huge do
-    r = TransformTree::TransformRoot.new.add_transform(twice)
+    r = TransformTree::Root.new.add_transform(twice)
     5.times { r.add_transform(twice, append) }
     r
   end
 
   describe '#initialize' do
     it 'should not raise an error' do
-      expect { TransformTree::TransformRoot.new }.to_not raise_error
+      expect { TransformTree::Root.new }.to_not raise_error
     end
   end
 
@@ -62,7 +62,7 @@ RSpec.describe TransformTree::TransformRoot do
   end
 
   describe '#add_transform' do
-    let(:tree) { TransformTree::TransformRoot.new }
+    let(:tree) { TransformTree::Root.new }
 
     it 'should be chainable' do
       expect { tree.add_transform(:closure).add_transform(:close) }.to_not raise_error
