@@ -13,6 +13,11 @@ describe TransformTree do
           lam = TransformTree::Transforms.null
           expect(lam.call(input)).to be input
         end
+
+        it 'should return the same object on each call' do
+          lam = TransformTree::Transforms.null
+          expect(TransformTree::Transforms.null).to be lam
+        end
       end
 
       describe '#ret' do
@@ -20,6 +25,17 @@ describe TransformTree do
           arg = 'woof'
           lam = TransformTree::Transforms.ret(arg)
           expect(lam.call).to be arg
+        end
+
+        it 'should return the same object on each call with identical parameters' do
+          str_lam = TransformTree::Transforms.ret('test')
+          arr_lam = TransformTree::Transforms.ret(%i(test array))
+          aggregate_failures do
+            expect(TransformTree::Transforms.ret('test')).to be str_lam
+            expect(TransformTree::Transforms.ret(%i(test array))).to be arr_lam
+            expect(TransformTree::Transforms.ret('other')).to_not be str_lam
+            expect(TransformTree::Transforms.ret('other')).to_not be arr_lam
+          end
         end
       end
     end
