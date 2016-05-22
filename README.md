@@ -27,7 +27,7 @@ Or install it yourself as:
 
 ## Usage
 ```ruby
-tree = TransformTree::TransformRoot.new
+tree = TransformTree::Root.new
 upcase = ->(o) { o.upcase }
 downcase = ->(o) { o.downcase }
 append_s = ->(o) { "#{o}s" }
