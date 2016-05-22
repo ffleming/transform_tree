@@ -1,14 +1,19 @@
 #!/usr/bin/env ruby
 
-require "bundler/setup"
-require "transform_tree"
+require 'bundler/setup'
+require 'pry'
+require 'transform_tree'
 
-# You can add fixtures and/or initialization code here to make experimenting
-# with your gem easier. You can also use a different console, if you like.
+tree = TransformTree::Root.new
+tree.add_transforms(
+  TransformTree::Transforms::ret('woof'),
+  TransformTree::Transforms::ret('arf')
+)
+tree.add_transforms(
+  ->(str) { str.upcase },
+  ->(str) { str.upcase },
+  TransformTree::Transforms::null
+)
 
-# (If you use this, don't forget to add pry to your Gemfile!)
-# require "pry"
-# Pry.start
 
-require "irb"
-IRB.start
+Pry.start
