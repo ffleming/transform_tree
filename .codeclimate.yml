@@ -1,0 +1,18 @@
+---
+engines:
+  duplication:
+    enabled: true
+    config:
+    exclude_fingerprints:
+    - 30235921c9f6ffc03c629ca3d72ee404
+    languages:
+      - ruby
+  fixme:
+    enabled: true
+  rubocop:
+    enabled: true
+ratings:
+  paths:
+  - "**.rb"
+exclude_paths:
+- spec/
