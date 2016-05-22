@@ -24,7 +24,8 @@ class TransformTree::TransformNode
   end
 
   def report(built='')
-    built << "#{' ' * level}#{level}\n"
+    closure_info = "#{File.basename closure.source_location.first}:#{closure.source_location.last}"
+    built << "#{' ' * level}#{level} - #{closure_info}\n"
     children.each {|child| child.report(built) }
     built
   end
