@@ -44,7 +44,7 @@ RSpec.describe TransformTree::Root do
         lines = huge.report.split("\n")
         expect(huge.report).to be_a String
         expect(lines.count).to be 64
-        expect(lines.last[0..6]).to eq '      6'
+        expect(lines.last).to match( / {20}└──root_spec.rb:\d+/)
       end
     end
   end
