@@ -6,11 +6,12 @@ module TransformTree
   module Transforms
     class << self
       def null
-        ->(o = nil) { o }
+        @null ||= ->(o = nil) { o }
       end
 
       def ret(arg)
-        ->(_ = nil) { arg }
+        @ret ||= {}
+        @ret[arg] ||= ->(_ = nil) { arg }
       end
     end
   end
