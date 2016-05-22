@@ -1,4 +1,6 @@
 require 'codeclimate-test-reporter'
+require 'byebug'
+require 'pry-byebug'
 
 SimpleCov.start do
   formatter SimpleCov::Formatter::MultiFormatter.new([

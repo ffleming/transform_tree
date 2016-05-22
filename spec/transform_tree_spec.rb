@@ -27,15 +27,59 @@ describe TransformTree do
           expect(lam.call).to be arg
         end
 
-        it 'should return the same object on each call with identical parameters' do
-          str_lam = TransformTree::Transforms.ret('test')
-          arr_lam = TransformTree::Transforms.ret(%i(test array))
+        it 'should return the same object on each call with object-identical parameters' do
+          str_lam_arg = 'test'
+          str_lam = TransformTree::Transforms.ret(str_lam_arg)
+          arr_lam_arg = %i(test array)
+          arr_lam = TransformTree::Transforms.ret(arr_lam_arg)
           aggregate_failures do
-            expect(TransformTree::Transforms.ret('test')).to be str_lam
-            expect(TransformTree::Transforms.ret(%i(test array))).to be arr_lam
+            expect(TransformTree::Transforms.ret(str_lam_arg)).to be str_lam
+            expect(TransformTree::Transforms.ret(arr_lam_arg)).to be arr_lam
             expect(TransformTree::Transforms.ret('other')).to_not be str_lam
             expect(TransformTree::Transforms.ret('other')).to_not be arr_lam
           end
+        end
+      end
+
+      describe '#append' do
+        let(:append_arg) { 'arf' }
+        let(:lam) do
+          TransformTree::Transforms.append(append_arg)
+        end
+
+        it 'should append the called argument' do
+          expect(lam.call('woof')).to eq "woof#{append_arg}"
+        end
+
+        it 'should cache the lambda appropriately' do
+          expect(TransformTree::Transforms.append(append_arg)).to be lam
+        end
+
+        it 'should call :+ on object passed as arg to lambda' do
+          lam_arg = 'woof'
+          expect(lam_arg).to receive(:+).with(append_arg).once
+          lam.call(lam_arg)
+        end
+      end
+
+      describe '#prepend' do
+        let(:prepend_arg) { 'arf' }
+        let(:lam) do
+          TransformTree::Transforms.prepend(prepend_arg)
+        end
+
+        it 'should prepend the called argument' do
+          expect(lam.call('woof')).to eq "#{prepend_arg}woof"
+        end
+
+        it 'should cache the lambda appropriately' do
+          expect(TransformTree::Transforms.prepend(prepend_arg)).to be lam
+        end
+
+        it 'should call :+ on object passed as arg to #prepend' do
+          lam_arg = 'woof'
+          expect(prepend_arg).to receive(:+).with(lam_arg).once
+          lam.call(lam_arg)
         end
       end
     end

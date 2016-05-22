@@ -11,7 +11,17 @@ module TransformTree
 
       def ret(arg)
         @ret ||= {}
-        @ret[arg] ||= ->(_ = nil) { arg }
+        @ret[arg.object_id] ||= ->(_ = nil) { arg }
+      end
+
+      def append(arg)
+        @append ||= {}
+        @append[arg.object_id] ||= ->(o = nil) { o + arg }
+      end
+
+      def prepend(arg)
+        @prepend ||= {}
+        @prepend[arg.object_id] ||= ->(o = nil) { arg + o }
       end
     end
   end
