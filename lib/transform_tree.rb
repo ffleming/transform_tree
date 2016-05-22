@@ -10,7 +10,7 @@ module TransformTree
       end
 
       def ret(arg)
-        ->(o = nil) { arg }
+        ->(_ = nil) { arg }
       end
     end
   end

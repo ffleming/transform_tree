@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 RSpec.describe TransformTree::TransformRoot do
-  let(:closure) { ->(o){o}  }
-  let(:twice) { ->(n){n = n * 2}  }
-  let(:append) { ->(s) {s = "#{s}A"} }
-  let(:prepend) { ->(s) {s = "P#{s}"} }
+  let(:closure) { ->(o) {o}  }
+  let(:twice) { ->(n) { n * 2}  }
+  let(:append) { ->(s) { "#{s}A"} }
+  let(:prepend) { ->(s) { "P#{s}"} }
   let(:sum_and_product) { ->(a, b) { [a + b, a * b]} }
 
   let(:single) { TransformTree::TransformRoot.new }
@@ -23,7 +23,7 @@ RSpec.describe TransformTree::TransformRoot do
 
   describe '#initialize' do
     it 'should not raise an error' do
-      expect{TransformTree::TransformRoot.new}.to_not raise_error
+      expect { TransformTree::TransformRoot.new }.to_not raise_error
     end
   end
 
@@ -72,7 +72,7 @@ RSpec.describe TransformTree::TransformRoot do
     let(:tree) { TransformTree::TransformRoot.new }
 
     it 'should be chainable' do
-      expect{ tree.add_transform(:closure).add_transform(:close) }.to_not raise_error
+      expect { tree.add_transform(:closure).add_transform(:close) }.to_not raise_error
     end
 
     it "should alter the object's state" do
@@ -80,7 +80,7 @@ RSpec.describe TransformTree::TransformRoot do
     end
 
     it 'should increase the height' do
-      expect{ tree.add_transform(:closure) }.to change { tree.height }.by 1
+      expect { tree.add_transform(:closure) }.to change { tree.height }.by 1
     end
   end
 

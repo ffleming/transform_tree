@@ -1,11 +1,11 @@
 require 'spec_helper'
-RSpec.describe TransformTree::TransformRoot do
+RSpec.describe 'Integrations' do
   describe "Creating a Hashcat mask" do
     it 'should transform properly' do
       # Input words to be transformed
       superlatives = [ 'rules', 'is number one', 'is number 1',
                 'is # one', 'is # 1', 'is awesome', 'is the best',
-                'rocks', 'forever', ]
+                'rocks', 'forever' ]
 
       # Create transforming closures
       titleize = ->(str) { str.split(/ /).map {|w| "#{w[0].upcase}#{w[1..-1]}"}.join }
@@ -34,20 +34,21 @@ RSpec.describe TransformTree::TransformRoot do
         titleize,
         semi_titleize,
         ->(w) { w.upcase },
-        ->(w) { w.downcase },
+        ->(w) { w.downcase }
       )
 
       # The provided null transform simply preserves the input
       tree.add_transform(
         TransformTree::Transforms::null,
-        ->(w) { "#{w}!" },
+        ->(w) { "#{w}!" }
       )
 
       # Providing a single transform means that every leaf is transformed - there is no split
       tree.add_transform(hc_mask)
       processed = tree.execute('')
 
-      expect(processed).to include '$I$s$N$u$m$b$e$r$O$n$e$!', '$R$u$l$e$s', '$f$o$r$e$v$e$r$!', '$i$s$a$w$e$s$o$m$e'
+      expect(processed).to include '$I$s$N$u$m$b$e$r$O$n$e$!', '$R$u$l$e$s',
+        '$f$o$r$e$v$e$r$!', '$i$s$a$w$e$s$o$m$e'
     end
   end
 end
