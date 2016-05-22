@@ -10,7 +10,9 @@ Gem::Specification.new do |spec|
   spec.email         = ["ffleming@gmail.com"]
 
   spec.summary       = "TransformTree is a library for combining arbitrary transformations on objects."
-  spec.description   = "TransformTree provides an API for buildng trees of closures and executing those closures on provided input.  This allows users to output all possible combinations of their desired transformations.  A small library of useful transformations is included."
+  spec.description   = "TransformTree provides an API for buildng trees of closures and executing those "\
+    "closures on provided input.  This allows users to output all possible combinations of their desired "\
+    "transformations.  A small library of useful transformations is included."
   spec.homepage      = "https://github.com/ffleming/transform_tree"
   spec.license       = "MIT"
 

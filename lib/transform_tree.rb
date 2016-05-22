@@ -6,7 +6,7 @@ module TransformTree
   module Transforms
     class << self
       def null
-        ->(o = nil){ o }
+        ->(o = nil) { o }
       end
 
       def ret(arg)

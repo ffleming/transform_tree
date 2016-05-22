@@ -8,9 +8,11 @@ RSpec.describe 'Integrations' do
                 'rocks', 'forever' ]
 
       # Create transforming closures
-      titleize = ->(str) { str.split(/ /).map {|w| "#{w[0].upcase}#{w[1..-1]}"}.join }
+      titleize = lambda do |str|
+        str.split(/ /).map { |w| "#{w[0].upcase}#{w[1..-1]}" }.join
+      end
       hc_mask = ->(str) { "$#{str.split(//).join('$')}" }
-      semi_titleize = ->(str) do
+      semi_titleize = lambda do |str|
         ret = titleize.call(str)
         "#{ret[0].downcase}#{ret[1..-1]}"
       end
@@ -19,7 +21,7 @@ RSpec.describe 'Integrations' do
 
       # Rather than executing the tree several times with each input, we can use the provide #ret transform
       # to split the root into input to be processed
-      closures = superlatives.map {|w| TransformTree::Transforms::ret(w)}
+      closures = superlatives.map { |w| TransformTree::Transforms::ret(w) }
       tree.add_transforms(*closures)
 
       # split on whitespace removal

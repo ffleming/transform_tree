@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 RSpec.describe TransformTree::TransformRoot do
-  let(:closure) { ->(o) {o}  }
-  let(:twice) { ->(n) { n * 2}  }
-  let(:append) { ->(s) { "#{s}A"} }
-  let(:prepend) { ->(s) { "P#{s}"} }
-  let(:sum_and_product) { ->(a, b) { [a + b, a * b]} }
+  let(:closure) { ->(o) { o } }
+  let(:twice) { ->(n) { n * 2 }  }
+  let(:append) { ->(s) { "#{s}A" } }
+  let(:prepend) { ->(s) { "P#{s}" } }
+  let(:sum_and_product) { ->(a, b) { [a + b, a * b] } }
 
   let(:single) { TransformTree::TransformRoot.new }
   let(:two) { TransformTree::TransformRoot.new.add_transform(twice) }
@@ -29,22 +29,22 @@ RSpec.describe TransformTree::TransformRoot do
 
   describe '#execute' do
     it 'should DFS through each transformation path, yielding the correct result' do
-      expect(split_tree.execute 'test').to include "testtestA", "Ptesttest"
-      expect(large.execute '_').to include "_AA", "P_A", "PP_"
+      expect(split_tree.execute('test')).to include 'testtestA', 'Ptesttest'
+      expect(large.execute('_')).to include '_AA', 'P_A', 'PP_'
     end
 
     it 'should be able to take no argument (as when used with `ret` transform)' do
-      expect(large.execute).to include "AA", "PA", "PP"
+      expect(large.execute).to include 'AA', 'PA', 'PP'
     end
   end
 
   describe '#report' do
     it 'should ouput correctly' do
-      huge_expected = "0\n 1\n  2\n   3\n    4\n     5\n      6\n      6\n     5\n      6\n      6\n" <<
-        "    4\n     5\n      6\n      6\n     5\n      6\n      6\n   3\n    4\n     5\n      6\n" <<
-        "      6\n     5\n      6\n      6\n    4\n     5\n      6\n      6\n     5\n      6\n      6\n" <<
-        "  2\n   3\n    4\n     5\n      6\n      6\n     5\n      6\n      6\n    4\n     5\n      6\n" <<
-        "      6\n     5\n      6\n      6\n   3\n    4\n     5\n      6\n      6\n     5\n      6\n" <<
+      huge_expected = "0\n 1\n  2\n   3\n    4\n     5\n      6\n      6\n     5\n      6\n      6\n" \
+        "    4\n     5\n      6\n      6\n     5\n      6\n      6\n   3\n    4\n     5\n      6\n" \
+        "      6\n     5\n      6\n      6\n    4\n     5\n      6\n      6\n     5\n      6\n      6\n" \
+        "  2\n   3\n    4\n     5\n      6\n      6\n     5\n      6\n      6\n    4\n     5\n      6\n" \
+        "      6\n     5\n      6\n      6\n   3\n    4\n     5\n      6\n      6\n     5\n      6\n" \
         "      6\n    4\n     5\n      6\n      6\n     5\n      6\n      6\n"
       aggregate_failures do
         expect(single.report).to eq "0\n"
