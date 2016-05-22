@@ -15,4 +15,9 @@ tree.add_transforms(
   TransformTree::Transforms::null
 )
 
+tree.add_transforms(
+  ->(str) { str.upcase },
+  ->(str) { str.upcase },
+  TransformTree::Transforms::null
+)
 Pry.start
